@@ -6,6 +6,9 @@ script:
   - rake $TASK
 env:
   - TASK=test:integration
+  # TODO: WIP
+  - TASK=release:build:windows-i686
+  - TASK=release:build:windows-x86_64
 
 before_deploy:
   - rake release:build
