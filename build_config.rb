@@ -31,6 +31,8 @@ if build_targets == ['all']
     linux-armhf
     darwin-x86_64
     darwin-i386
+    windows-x86_64
+    windows-i686
   ]
 end
 
@@ -116,6 +118,54 @@ if build_targets.include?('darwin-i386')
 
     conf.build_target     = 'i386-pc-linux-gnu'
     conf.host_target      = 'i386-apple-darwin14'
+
+    debug_config(conf)
+    gem_config(conf)
+  end
+end
+
+if build_targets.include?('windows-x86_64')
+  MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
+    toolchain :gcc
+
+    [conf.cc, conf.linker].each do |cc|
+      cc.command = 'x86_64-w64-mingw32-gcc'
+    end
+    conf.cxx.command      = 'x86_64-w64-mingw32-g++'
+    conf.archiver.command = 'x86_64-w64-mingw32-gcc-ar'
+
+    conf.exts do |exts|
+      exts.object = '.obj'
+      exts.executable = '.exe'
+      exts.library = '.lib'
+    end
+
+    conf.build_target     = 'x86_64-pc-linux-gnu'
+    conf.host_target      = 'x86_64-w64-mingw32'
+
+    debug_config(conf)
+    gem_config(conf)
+  end
+end
+
+if build_targets.include?('windows-i686')
+  MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
+    toolchain :gcc
+
+    [conf.cc, conf.linker].each do |cc|
+      cc.command = 'i686-w64-mingw32-gcc'
+    end
+    conf.cxx.command      = 'i686-w64-mingw32-g++'
+    conf.archiver.command = 'i686-w64-mingw32-gcc-ar'
+
+    conf.exts do |exts|
+      exts.object = '.obj'
+      exts.executable = '.exe'
+      exts.library = '.lib'
+    end
+
+    conf.build_target     = 'i686-pc-linux-gnu'
+    conf.host_target      = 'i686-w64-mingw32'
 
     debug_config(conf)
     gem_config(conf)

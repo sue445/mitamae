@@ -116,6 +116,7 @@ Currently following platforms are supported but others can be easily supported b
 - Gentoo
 - Ubuntu
 - macOS
+- Windows
 - [...etc](https://github.com/k0kubun/mruby-specinfra/tree/master/mrblib/specinfra/command)
 
 ## Contributing
